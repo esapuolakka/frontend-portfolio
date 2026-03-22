@@ -20,6 +20,7 @@ function MovieTheater() {
 
   // Fetching a list of movies
   const fetchMovies = useCallback(async () => {
+    console.log("Fetching movies");
     if (movieCache[query]) {
       setMovies(movieCache[query]);
       setSelectedMovie(movieCache[query][0]);
@@ -36,7 +37,6 @@ function MovieTheater() {
 
       if (data?.results?.length) {
         setMovies(data.results);
-        setSelectedMovie(data.results[0]);
         setMovieCache((prevCache) => ({
           ...prevCache,
           [query]: data.results,
@@ -83,12 +83,12 @@ function MovieTheater() {
   }, [query, fetchMovies]);
 
   // Set the random backdrop during the initial load
-  useEffect(() => {
-    if (selectedMovie?.backdrop_path) {
-      const img = new Image();
-      img.src = `${imageUrl}/original/${selectedMovie.backdrop_path}`;
-    }
-  }, [selectedMovie]);
+  // useEffect(() => {
+  //   if (selectedMovie?.backdrop_path) {
+  //     const img = new Image();
+  //     img.src = `${imageUrl}/original/${selectedMovie.backdrop_path}`;
+  //   }
+  // }, [selectedMovie]);
 
   const renderMovies = () =>
     movies.map((movie) => (

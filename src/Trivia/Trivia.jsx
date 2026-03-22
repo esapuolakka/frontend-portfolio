@@ -2,6 +2,11 @@ import { useState } from 'react';
 import './Trivia.css';
 import { useNavigate } from 'react-router-dom';
 
+const decodeHtml = (html) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.documentElement.textContent;
+};
+
 function Trivia() {
   const [question, setQuestion] = useState('');
   const navigate = useNavigate();
@@ -16,7 +21,7 @@ function Trivia() {
       return response.json();
     })
     .then(resData => {
-      const newQuestion = resData.results[0].question;
+      const newQuestion = decodeHtml(resData.results[0].question);
       setQuestion(newQuestion);
     })
   }
